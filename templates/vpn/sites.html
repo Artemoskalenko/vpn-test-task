@@ -1,0 +1,76 @@
+{% extends 'user/base.html' %}
+
+{% block title %}VPN Service | Your sites{% endblock %}
+
+{% block content %}
+
+<div class='py-4 mt-auto'>
+    <div class='container px-4'>
+
+        <div class="card text-center" style="margin-bottom:50px;max-width: 1200px;">
+            <h5 class="card-header">Add new site</h5>
+            <form action="{% url 'sites' %}" method='POST'>
+                {% csrf_token %}
+                <div class='form-group'>
+                    <div class='row' style="max-width:400px;margin-left:auto;margin-right:auto;">
+                        <div class='mb-3'>
+                            <label for='site_name' class='form-label mt-2'>
+                                Site name
+                            </label>
+                            <input
+                                    class='form-control'
+                                    type='text'
+                                    name='site_name'
+                                    id='site_name'
+                                    required
+                                    title='Site name'
+                            >
+                        </div>
+                        <div class='mb-3'>
+                            <label for='original_url' class='form-label mt-2'>
+                                Original URL
+                            </label>
+                            <input
+                                    class='form-control'
+                                    type='text'
+                                    name='original_url'
+                                    id='original_url'
+                                    title='https://domain_name or http://domain_name'
+                                    pattern="https?://.+"
+                            >
+                        </div>
+                        <div class='mb-3'>
+                            <button type='submit' class='btn btn-primary'>
+                                Add site
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {% if form_error %}
+            <br>
+            <div class='alert alert-dismissible alert-danger' role='alert'>
+                <button type='button' class='btn-close'
+                        data-bs-dismiss='alert'></button>
+                An error occurred while trying to add a new site.
+                Make sure you have entered all details correctly.
+            </div>
+            {% endif %}
+        </div>
+
+        {% for site in sites %}
+        <div class="card mb-2">
+            <div class="card-body">
+                <h5 class="card-title" style="font-weight: 600;">{{ site.site_name }}</h5>
+                <a href="{% url 'vpn_page' site_name=site.site_name %}" class="btn btn-primary mb-3" style="width: 142px!important;" role="button">Go to website</a>
+
+                <a href="{% url 'site_delete' pk=site.id %}" data-confirm="Are you sure?" data-method="delete" type="button" class="btn btn-outline-danger mb-3" style="width: 142px!important;">Delete site</a>
+
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock  %}

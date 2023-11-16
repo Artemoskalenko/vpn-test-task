@@ -1,0 +1,51 @@
+{% extends 'user/base.html' %}
+
+{% block title %}VPN Service | Your sites{% endblock %}
+
+{% block content %}
+
+<div class='py-4 mt-auto'>
+    <div class='container px-4'>
+
+        <div class="card text-center" style="margin-bottom:50px;max-width: 1200px;">
+            <h5 class="card-header">Statistics for your sites</h5>
+        </div>
+
+        {% for site in sites %}
+        <div class="card mb-2">
+            <div class="card-body">
+                <h5 class="card-title" style="font-weight: 600;">{{ site.site_name }}</h5>
+                <div class='d-flex w-100 justify-content-between'>
+                    <p class='mb-1'>
+                        Site name: <strong>{{ site.site_name }}</strong>
+                    </p>
+                </div>
+                <div class='d-flex w-100 justify-content-between'>
+                    <p class='mb-1'>
+                        Original URL: <strong>{{ site.original_url }}</strong>
+                    </p>
+                </div>
+                <div class='d-flex w-100 justify-content-between'>
+                    <p class='mb-1'>
+                        Number of transitions on the site: <strong>{{ site.number_of_transitions }}</strong>
+                    </p>
+                </div>
+                <div class='d-flex w-100 justify-content-between'>
+                    <p class='mb-1'>
+                        Data sent to the site: <strong>{{ site.sent_data }} bytes</strong>
+                    </p>
+                </div>
+                <div class='d-flex w-100 justify-content-between'>
+                    <p class='mb-1'>
+                        Data received from the site: <strong>{{ site.received_data }} bytes</strong>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock  %}

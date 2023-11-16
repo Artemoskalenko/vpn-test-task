@@ -1,0 +1,78 @@
+{% extends 'user/base.html' %}
+
+{% block title %}VPN Service | Registration{% endblock %}
+
+{% block content %}
+
+
+<div class='py-4 mt-auto'>
+    <div class='container px-4'>
+
+        <div class='d-flex justify-content-center'>
+            <h3>Registration</h3>
+        </div>
+
+        {% if message %}
+            <div style="color:red;">{{ message }}</div>
+        {% endif %}
+
+        <div class='row'>
+            <div class='col-lg-6 offset-lg-3'>
+                <div class='card bg-secondary mb-3'>
+                    <div class='card-body'>
+
+                        <div class='form-group'>
+
+                            <form action="{% url 'register' %}" method='POST'>
+                                {% csrf_token %}
+                                <div class='form-group'>
+                                    <label for='inputUsername' class='form-label mt-4'>
+                                        Username
+                                    </label>
+                                    <input type='text' name='username' class='form-control' id='inputUsername' placeholder='Enter your username' autofocus>
+                                </div>
+
+                                <div class='form-group'>
+                                    <label for='inputEmail' class='form-label mt-4'>
+                                        Email(optional)
+                                    </label>
+                                    <input type='email' name='email' class='form-control' id='inputEmail' placeholder='Enter your email'>
+                                </div>
+
+                                <div class='form-group'>
+                                    <label for='inputPassword1' class='form-label mt-4'>
+                                        Password
+                                    </label>
+                                    <input type='password' name='password' class='form-control' id='inputPassword1' placeholder='Enter your password'>
+                                </div>
+
+                                <div class='form-group'>
+                                    <label for='inputPassword2' class='form-label mt-4'>
+                                        Password confirmation
+                                    </label>
+                                    <input type='password' name='confirmation' class='form-control' id='inputPassword2' placeholder='Confirm password'>
+                                </div>
+
+                                <div class='form-group mt-4'>
+                                    <button type='submit' class='btn btn-primary'>
+                                        Register
+                                    </button>
+                                </div>
+
+                            </form>
+
+                            <div class='mt-2'>
+                                Already have an account? <a href="{% url 'login' %}" type='button' class='btn btn-link'>
+                                    Authorization is here
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}
