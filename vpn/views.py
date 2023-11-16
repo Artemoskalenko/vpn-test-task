@@ -41,20 +41,20 @@ class StatisticsPage(LoginRequiredMixin, ListView):
     login_url = '/login/'
 
     def get_queryset(self):
-        return Site.objects.filter(user_id=self.request.user.id)
+        return Site.objects.filter(user_id=self.request.user)
 
 
 @login_required
 def vpn_page(request, site_name, site_path=""):
-    """displaying a page via VPN"""
+    """Displaying a page via VPN"""
     try:
+        # Checking whether a given site is in the user's list of sites
         site = Site.objects.get(user_id=request.user, site_name=site_name)
     except Site.DoesNotExist:
         raise Http404("No Site matches the given query")
 
     # Parsing the page, changing links within the page and getting the final response
     url = site.original_url + site_path
-    site_name = site.site_name
     page = requests.get(url, stream=True)
     soup = BeautifulSoup(page.content, "html.parser")
     transformed_page = link_replacement_function(url=site.original_url.rstrip('/'), soup=soup, site_name=site_name)

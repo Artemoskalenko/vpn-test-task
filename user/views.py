@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.db import IntegrityError
 from django.contrib.auth.models import User
@@ -10,6 +10,7 @@ from django.contrib.auth.forms import AuthenticationForm
 
 
 class LoginUser(LoginView):
+    """Class that generates the login page"""
     form_class = AuthenticationForm
     template_name = 'user/login_page.html'
 
@@ -27,6 +28,10 @@ class LoginUser(LoginView):
 
 
 def register(request):
+    """
+    Function that generates the registration page.
+    With the POST method, it receives data from the registration form, creates a new user and redirects him to the 'profile' page
+    """
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
@@ -62,6 +67,7 @@ def logout_user(request):
 @login_required
 def profile(request):
     if request.method == 'POST':
+        # changing user data
         user = User.objects.get(id=request.user.id)
         if request.POST['username']:
             user.username = request.POST['username']
